@@ -8,7 +8,7 @@
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from colorama import init, Fore, Style
+from colorama import init, Fore, Back, Style
 import ssl
 import datetime
 
@@ -21,7 +21,7 @@ theatres = [ "scotiabank-theatre-vancouver",
              "cineplex-odeon-international-village-cinemas",
              "silverCity-riverport-cinemas" ]
 
-print (Style.BRIGHT)
+print (Style.BRIGHT + "\n")
 print (Fore.BLUE + "Cineplex Theatres in Vancouver:")
 
 for index, theatre in enumerate(theatres, start = 1):
@@ -50,14 +50,43 @@ for i in user_selections:
     # Parse HTML
     soup = BeautifulSoup (raw, "html.parser")
 
-    cards = soup.findAll ("div", { "class":"h3 showtime-card--title" })
+    movies = soup.findAll ("div", { "class":"h3 showtime-card--title" })
+    
+    
+    showtimes = soup.findAll ("div", { "class": "showtime-card showtime-single" })
+    
+    #print (showtimes[1].findAll ("ul", { "class": "showtime--list" }))
+    
 
-    print (Fore.BLUE + "\n" + theatre.upper() + " is currently playing:")
+    print (Fore.RED + "\n<" + theatre.upper() + "> is currently playing:")
 
-    for card in cards:
-        title = card.meta["content"]
+    for index, movie in enumerate (movies):
+        title = movie.meta["content"]
+        all_times = "";
+
         print (Fore.YELLOW + " > " + str (title))
+        
+        
+        
+        #print (showtimes[index].findAll ("div", { "class": "grid__item one-whole" }))
+        
+        # print (showtimes[index].findAll("div", { "class": "grid showtime--item" }))   , { "class": "showtime--list" })
+        
+        
+        for index, times in enumerate (showtimes[index].findAll("li")):
+            #print (times.meta["content"])
+            if index == 0:
+                all_times = str (times.meta["content"])
+            else:
+                all_times = all_times + ", " + str (times.meta["content"])
 
-print ("")
+        
+        print (Style.NORMAL + "   [" + all_times + "]" + Style.BRIGHT)
+# print (" " + Fore.WHITE + str (times.meta["content"]))
+     
+        
+
+
+print (Style.RESET_ALL + "")
 
 
