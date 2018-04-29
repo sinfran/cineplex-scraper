@@ -1,6 +1,4 @@
-#!/bin/sh
-
-#  scraper.sh
+#  scraper.py
 #  
 #
 #  Created by Frances Sin on 2018-04-25.
