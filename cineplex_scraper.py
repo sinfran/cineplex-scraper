@@ -51,13 +51,8 @@ for i in user_selections:
     soup = BeautifulSoup (raw, "html.parser")
 
     movies = soup.findAll ("div", { "class":"h3 showtime-card--title" })
-    
-    
     showtimes = soup.findAll ("div", { "class": "showtime-card showtime-single" })
     
-    #print (showtimes[1].findAll ("ul", { "class": "showtime--list" }))
-    
-
     print (Fore.RED + "\n<" + theatre.upper() + "> is currently playing:")
 
     for index, movie in enumerate (movies):
@@ -74,7 +69,7 @@ for i in user_selections:
         
         
         for index, times in enumerate (showtimes[index].findAll("li")):
-            #print (times.meta["content"])
+            
             if index == 0:
                 all_times = str (times.meta["content"])
             else:
